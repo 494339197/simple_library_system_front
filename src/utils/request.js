@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 
 // 创建 axios 实例
 const request = axios.create({
-  baseURL: 'http://localhost:8092/BookManager', // 基础URL
+  baseURL: 'https://booktest.g7g.de5.net/BookManager', // 基础URL
   timeout: 10000 // 请求超时时间
 })
 

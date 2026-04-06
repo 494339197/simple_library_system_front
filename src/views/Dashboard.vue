@@ -32,11 +32,10 @@
                 <p>借阅记录</p>
               </div>
             </el-col>
-            <el-col :span="6">
-              <div class="quick-link disabled">
-                <el-icon :size="40" color="#909399"><Lock /></el-icon>
-                <p>修改密码</p>
-                <el-tag size="small" type="info">开发中</el-tag>
+            <el-col :span="6" v-if="isAdmin">
+              <div class="quick-link" @click="goTo('/admin/book-types')">
+                <el-icon :size="40" color="#909399"><Collection /></el-icon>
+                <p>类型管理</p>
               </div>
             </el-col>
             <el-col :span="6" v-if="isAdmin">
@@ -78,7 +77,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import { Reading, Document, Lock, User } from '@element-plus/icons-vue'
+import { Reading, Document, Lock, User, Collection } from '@element-plus/icons-vue'
 
 const router = useRouter()
 const username = ref('')

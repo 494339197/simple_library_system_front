@@ -40,7 +40,7 @@
               <span>借阅记录</span>
             </el-menu-item>
 
-            <el-menu-item index="/password" disabled>
+            <el-menu-item index="/password">
               <el-icon><Lock /></el-icon>
               <span>修改密码</span>
             </el-menu-item>
@@ -59,12 +59,12 @@
                 <span>借阅管理</span>
               </el-menu-item>
 
-              <el-menu-item index="/admin/users" disabled>
+              <el-menu-item index="/admin/users">
                 <el-icon><User /></el-icon>
                 <span>用户管理</span>
               </el-menu-item>
 
-              <el-menu-item index="/admin/book-types" disabled>
+              <el-menu-item index="/admin/book-types">
                 <el-icon><Collection /></el-icon>
                 <span>类型管理</span>
               </el-menu-item>
@@ -113,13 +113,19 @@ const handleLogout = async () => {
 
     const token = localStorage.getItem('token')
     if (token) {
-      await logout(token)
+      try {
+        await logout(token)
+      } catch (e) {
+        // Mock后端可能不认token，忽略错误，继续清本地
+        console.warn('后端登出失败，清除本地登录信息')
+      }
     }
 
     // 清除本地存储
     localStorage.removeItem('token')
     localStorage.removeItem('username')
     localStorage.removeItem('isadmin')
+    localStorage.removeItem('userid')
 
     ElMessage.success('退出成功')
     router.push('/login')

@@ -73,7 +73,7 @@
 import { ref, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { login } from '@/api/user'
+import { login, getUserInfo } from '@/api/user'
 
 const router = useRouter()
 const loginFormRef = ref(null)
@@ -116,9 +116,18 @@ const handleLogin = async () => {
           localStorage.setItem('token', response.data.token)
           localStorage.setItem('username', loginForm.username)
           localStorage.setItem('isadmin', loginForm.isadmin)
-          localStorage.setItem('userid', response.data.userid)
 
           ElMessage.success('登录成功')
+
+          // 尝试获取用户信息（包含userid）
+          try {
+            const userInfo = await getUserInfo(response.data.token)
+            if (userInfo.data && userInfo.data.userid) {
+              localStorage.setItem('userid', userInfo.data.userid)
+            }
+          } catch (err) {
+            console.warn('获取用户信息失败:', err)
+          }
 
           // 跳转到首页
           router.push('/dashboard')

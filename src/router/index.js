@@ -1,11 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from '@/views/Login.vue'
+import Register from '@/views/Register.vue'
 import Layout from '@/views/Layout.vue'
 import Dashboard from '@/views/Dashboard.vue'
 import BookList from '@/views/BookList.vue'
 import BorrowRecord from '@/views/BorrowRecord.vue'
+import PasswordChange from '@/views/PasswordChange.vue'
 import BookManage from '@/views/admin/BookManage.vue'
 import BorrowManage from '@/views/admin/BorrowManage.vue'
+import UserManage from '@/views/admin/UserManage.vue'
+import BookTypeManage from '@/views/admin/BookTypeManage.vue'
+import NotFound from '@/views/NotFound.vue'
 
 const routes = [
   {
@@ -13,6 +18,12 @@ const routes = [
     name: 'Login',
     component: Login,
     meta: { title: '登录' }
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: Register,
+    meta: { title: '注册' }
   },
   {
     path: '/',
@@ -38,6 +49,12 @@ const routes = [
         meta: { title: '借阅记录' }
       },
       {
+        path: '/password',
+        name: 'PasswordChange',
+        component: PasswordChange,
+        meta: { title: '修改密码' }
+      },
+      {
         path: '/admin/book-manage',
         name: 'BookManage',
         component: BookManage,
@@ -48,8 +65,26 @@ const routes = [
         name: 'BorrowManage',
         component: BorrowManage,
         meta: { title: '借阅管理', requireAdmin: true }
+      },
+      {
+        path: '/admin/users',
+        name: 'UserManage',
+        component: UserManage,
+        meta: { title: '用户管理', requireAdmin: true }
+      },
+      {
+        path: '/admin/book-types',
+        name: 'BookTypeManage',
+        component: BookTypeManage,
+        meta: { title: '类型管理', requireAdmin: true }
       }
     ]
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: NotFound,
+    meta: { title: '404' }
   }
 ]
 
@@ -66,8 +101,11 @@ router.beforeEach((to, from, next) => {
   // 获取 token
   const token = localStorage.getItem('token')
 
-  // 如果访问登录页，直接放行
-  if (to.path === '/login') {
+  // 允许登录页和注册页和404页
+  if (to.path === '/login' || to.path === '/register' || to.path === '/404') {
+    next()
+  } else if (to.name === 'NotFound') {
+    // 404页无token也能访问
     next()
   } else {
     // 访问其他页面需要验证 token
