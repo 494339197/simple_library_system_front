@@ -52,3 +52,97 @@ export function register(data) {
     data
   })
 }
+
+/**
+ * 修改密码
+ * @param {Object} data - 修改参数
+ */
+export function alterPassword(data) {
+  return request({
+    url: '/user/alterPassword',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 读者修改密码
+ * @param {Object} data - 修改参数
+ */
+export function readerAlterPassword(data) {
+  return request({
+    url: '/user/reader/alterPassword',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 获取用户总数（管理员）
+ */
+export function getUserCount() {
+  return request({
+    url: '/user/getCount',
+    method: 'get'
+  })
+}
+
+/**
+ * 分页查询用户（管理员）
+ * @param {Object} params - 查询参数
+ */
+export function queryUsersByPage(params) {
+  return request({
+    url: '/user/queryUsersByPage',
+    method: 'get',
+    params
+  })
+}
+
+/**
+ * 添加用户（管理员）
+ * @param {Object} data - 用户信息
+ */
+export function addUser(data) {
+  return request({
+    url: '/user/addUser',
+    method: 'post',
+    data
+  })
+}
+
+/**
+ * 删除用户（管理员）
+ * @param {Object} data - 包含 userid
+ */
+export function deleteUser(data) {
+  return request({
+    url: '/user/deleteUser',
+    method: 'delete',
+    data
+  })
+}
+
+/**
+ * 批量删除用户（管理员）
+ * @param {Array} data - 用户ID数组
+ */
+export function deleteUsers(data) {
+  return request({
+    url: '/user/deleteUsers',
+    method: 'delete',
+    data
+  })
+}
+
+/**
+ * 更新用户（管理员）
+ * @param {Object} data - 用户信息
+ */
+export function updateUser(data) {
+  return request({
+    url: '/user/updateUser',
+    method: 'put',
+    data
+  })
+}

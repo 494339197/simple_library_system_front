@@ -3,7 +3,7 @@ import { ElMessage } from 'element-plus'
 
 // 创建 axios 实例
 const request = axios.create({
-  baseURL: 'http://localhost:8092/BookManager', // 基础URL
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/api', // 基础URL（开发时通过Vite代理，生产时可通过环境变量配置）
   timeout: 10000 // 请求超时时间
 })
 
